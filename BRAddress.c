@@ -31,7 +31,7 @@
 #define VAR_INT16_HEADER  0xfd
 #define VAR_INT32_HEADER  0xfe
 #define VAR_INT64_HEADER  0xff
-#define MAX_SCRIPT_LENGTH 0x100 // scripts over this size will not be parsed for an address
+#define MAX_SCRIPT_LENGTH 0x1000 // Brendan E. Mahon: Increased to 1,000,000
 
 // reads a varint from buf and stores its length in intLen if intLen is non-NULL
 // returns the varint value

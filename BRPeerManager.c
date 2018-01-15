@@ -815,7 +815,7 @@ static void _peerConnected(void *info)
         peer_log(peer, "node isn't synced");
         BRPeerDisconnect(peer);
     }
-    else if ((peer->services & SERVICES_NODE_BCASH) == SERVICES_NODE_BCASH) {
+    else if ((peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
         peer_log(peer, "b-cash nodes not supported");
         BRPeerDisconnect(peer);
     }
