@@ -655,7 +655,7 @@ BRTransaction *BRWalletCreateTxForOutputs(BRWallet *wallet, const BRTxOutput out
 }
 
 // signs any inputs in tx that can be signed using private keys from the wallet
-// forkId is 0 for bitcoin, 0x40 for b-cash
+// forkId is 0 for bitcoin core, 0x40 for bitcoin (cash)
 // seed is the master private key (wallet seed) corresponding to the master public key given when the wallet was created
 // returns true if all inputs were signed, or false if there was an error or not all inputs were able to be signed
 int BRWalletSignTransaction(BRWallet *wallet, BRTransaction *tx, int forkId, const void *seed, size_t seedLen)

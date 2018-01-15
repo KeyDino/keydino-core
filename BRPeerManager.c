@@ -816,7 +816,7 @@ static void _peerConnected(void *info)
         BRPeerDisconnect(peer);
     }
     else if ((peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
-        peer_log(peer, "b-cash nodes not supported");
+        peer_log(peer, "bitcoin (cash) nodes not supported");
         BRPeerDisconnect(peer);
     }
     else if (BRPeerVersion(peer) >= 70011 && ! (peer->services & SERVICES_NODE_BLOOM)) {
