@@ -119,7 +119,7 @@ static const char *dns_seeds[] = {
 
 //static const char *dns_seeds[] = {
 //    "seed.bitcoinabc.org.", "seed-abc.bitcoinforks.org.", "seed.bitprim.org.", "seed.deadalnix.me.",
-//    "seeder.criptolayer.net."
+//    "seeder.criptolayer.net.", "btccash-seeder.bitcoinunlimited.info."
 //};
 
 #endif
@@ -732,6 +732,7 @@ static UInt128 *_addressLookup(const char *hostname)
                 addrList[i].u32[3] = ((struct sockaddr_in *)p->ai_addr)->sin_addr.s_addr;
                 i++;
             }
+            //Unitwallet guys have the following three lines commented out
             else if (p->ai_family == AF_INET6) {
                 addrList[i++] = *(UInt128 *)&((struct sockaddr_in6 *)p->ai_addr)->sin6_addr;
             }
@@ -832,6 +833,7 @@ static void _peerConnected(void *info)
         peer_log(peer, "node isn't synced");
         BRPeerDisconnect(peer);
     }
+    //Unitwallet guys just added a ! in front of this and kept rolling.
     else if ((peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
         peer_log(peer, "bitcoin (cash) nodes not supported");
         BRPeerDisconnect(peer);
@@ -1218,7 +1220,7 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
             }
         }
     }
-
+    //Unitwallet guys don't confirm block difficulty at all by removing the next five lines of code
     // verify block difficulty
     if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
         peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
