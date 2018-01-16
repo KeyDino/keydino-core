@@ -61,8 +61,8 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     {  806400, "0000000000000faf114ff29df6dbac969c6b4a3b407cd790d3a12742b50c2398", 1462006183, 0x1a34e280 },
     {  907200, "0000000000166938e6f172a21fe69fe335e33565539e74bf74eeb00d2022c226", 1469705562, 0x1c00ffff },
     { 1008000, "000000000000390aca616746a9456a0d64c1bd73661fd60a51b5bf1c92bae5a0", 1476926743, 0x1a52ccc0 },
-    { 1108800, "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e", 1490751239, 0x1b09ecf0 },
-    { 1203698, "00000000d365179f60f3bfa4ae2beaffc04c920c7472c41e66271ad1c502fd21", 1516073725, 0x1d00ffff}
+    { 1108800, "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e", 1490751239, 0x1b09ecf0 }
+    //{ 1203698, "00000000d365179f60f3bfa4ae2beaffc04c920c7472c41e66271ad1c502fd21", 1516073725, 0x1d00ffff}
 };
 
 //Bitcoin (Cash) Testnet latest block
@@ -107,8 +107,8 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     { 403200, "000000000000000000c4272a5c68b4f55e5af734e88ceab09abf73e9ac3b6d01", 1458292068, 0x1806a4c3 },
     { 423360, "000000000000000001630546cde8482cc183708f076a5e4d6f51cd24518e8f85", 1470163842, 0x18057228 },
     { 443520, "00000000000000000345d0c7890b2c81ab5139c6e83400e5bed00d23a1f8d239", 1481765313, 0x18038b85 },
-    { 463680, "000000000000000000431a2f4619afe62357cd16589b638bb638f2992058d88e", 1493259601, 0x18021b3e },
-    { 513111, "000000000000000003a7a4e65f327036c794bd1083577bd7196b3edf9f56aaff", 1516068278, 0x1803d5d9}
+    { 463680, "000000000000000000431a2f4619afe62357cd16589b638bb638f2992058d88e", 1493259601, 0x18021b3e }
+    //{ 513111, "000000000000000003a7a4e65f327036c794bd1083577bd7196b3edf9f56aaff", 1516068278, 0x1803d5d9}
 };
 
 //Bitcoin (Cash) latest block
@@ -735,9 +735,9 @@ static UInt128 *_addressLookup(const char *hostname)
                 i++;
             }
             //Unitwallet guys have the following three lines commented out
-            else if (p->ai_family == AF_INET6) {
-                addrList[i++] = *(UInt128 *)&((struct sockaddr_in6 *)p->ai_addr)->sin6_addr;
-            }
+            //else if (p->ai_family == AF_INET6) {
+            //    addrList[i++] = *(UInt128 *)&((struct sockaddr_in6 *)p->ai_addr)->sin6_addr;
+            //}
         }
         
         freeaddrinfo(servinfo);
@@ -1226,11 +1226,11 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
     }
     //Unitwallet guys don't confirm block difficulty at all by removing the next five lines of code
     // verify block difficulty
-    if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
-        peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
-                 u256_hex_encode(block->blockHash));
-        r = 0;
-    }
+    //if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
+    //    peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
+    //             u256_hex_encode(block->blockHash));
+    //    r = 0;
+    //}
     
     if (r) {
         BRMerkleBlock *checkpoint = BRSetGet(manager->checkpoints, block);
