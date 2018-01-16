@@ -513,7 +513,8 @@ int BRTransactionSign(BRTransaction *tx, int forkId, BRKey keys[], size_t keysCo
 {
     
     //Unitwallet guys override the forkId input parameter by adding the following (uncommented) to for Bitcoin (Cash)
-    //forkId = 0x40;
+    forkId = 0x40;
+    
     BRAddress addrs[keysCount], address;
     size_t i, j;
     
