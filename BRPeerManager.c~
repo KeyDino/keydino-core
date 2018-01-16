@@ -64,12 +64,13 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     { 1108800, "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e", 1490751239, 0x1b09ecf0 }
 };
 
+//Bitcoin (Cash) Testnet latest block
+//{ 1203698, "00000000d365179f60f3bfa4ae2beaffc04c920c7472c41e66271ad1c502fd21", 1516073725, 0x1d00ffff}
+
 static const char *dns_seeds[] = {
     "testnet-seed.breadwallet.com.", "testnet-seed.bitcoin.petertodd.org.", "testnet-seed.bluematt.me.",
     "testnet-seed.bitcoin.schildbach.de."
 };
-
-//Test
 
 //Bitcoin (Cash) seeds
 //static const char *dns_seeds[] = {

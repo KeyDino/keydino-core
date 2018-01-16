@@ -109,6 +109,9 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     { 463680, "000000000000000000431a2f4619afe62357cd16589b638bb638f2992058d88e", 1493259601, 0x18021b3e }
 };
 
+//Bitcoin (Cash) latest block
+//{ 513111, "000000000000000003a7a4e65f327036c794bd1083577bd7196b3edf9f56aaff", 1516068278, 0x1803d5d9}
+
 static const char *dns_seeds[] = {
     "seed.breadwallet.com.", "seed.bitcoin.sipa.be.", "dnsseed.bluematt.me.", "dnsseed.bitcoin.dashjr.org.",
     "seed.bitcoinstats.com.", "bitseed.xf2.org.", "seed.bitcoin.jonasschnelli.ch."
