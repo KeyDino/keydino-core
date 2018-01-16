@@ -511,6 +511,9 @@ int BRTransactionIsSigned(const BRTransaction *tx)
 // returns true if tx is signed
 int BRTransactionSign(BRTransaction *tx, int forkId, BRKey keys[], size_t keysCount)
 {
+    
+    //Unitwallet guys override the forkId input parameter by adding the following (uncommented) to for Bitcoin (Cash)
+    //forkId = 0x40;
     BRAddress addrs[keysCount], address;
     size_t i, j;
     

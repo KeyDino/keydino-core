@@ -38,7 +38,8 @@ extern "C" {
 #define TX_OUTPUT_SIZE       34          // estimated size for a typical transaction output
 #define TX_INPUT_SIZE        148         // estimated size for a typical compact pubkey transaction input
 #define TX_MIN_OUTPUT_AMOUNT (TX_FEE_PER_KB*3*(TX_OUTPUT_SIZE + TX_INPUT_SIZE)/1000) //no txout can be below this amount
-#define TX_MAX_SIZE          100000      // no tx can be larger than this size in bytes
+#define TX_MAX_SIZE          1000000      // no tx can be larger than this size in bytes. Updated to 1MB for Bitcoin (Cash)
+    //Now that Bitcoin fees are very low again, these parameters can be revisited
 #define TX_FREE_MAX_SIZE     1000        // tx must not be larger than this size in bytes without a fee
 #define TX_FREE_MIN_PRIORITY 57600000ULL // tx must not have a priority below this value without a fee
 #define TX_UNCONFIRMED       INT32_MAX   // block height indicating transaction is unconfirmed
