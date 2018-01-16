@@ -44,9 +44,9 @@
 #include <arpa/inet.h>
 
 #if BITCOIN_TESTNET
-#define MAGIC_NUMBER 0xf4e5f3f4 //Bitcoin (Cash) testnet magic number:
+#define MAGIC_NUMBER 0x0709110b //Bitcoin (Cash) testnet magic number: 0xf4e5f3f4
 #else 
-#define MAGIC_NUMBER 0xe3e1f3e8 //Bitcoin (Cash) mainnet magic number:     
+#define MAGIC_NUMBER 0xd9b4bef9 //Bitcoin (Cash) mainnet magic number: 0xe3e1f3e8
 #endif
 #define HEADER_LENGTH      24
 #define MAX_MSG_LENGTH     0x02000000
