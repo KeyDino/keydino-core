@@ -69,6 +69,8 @@ static const char *dns_seeds[] = {
     "testnet-seed.bitcoin.schildbach.de."
 };
 
+//Test
+
 //Bitcoin (Cash) seeds
 //static const char *dns_seeds[] = {
 //    "testnet-seed.bitcoinabc.org.", "testnet-seed-abc.bitcoinforks.org.", "testnet-seed.bitprim.org.",
