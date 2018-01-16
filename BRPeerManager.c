@@ -69,6 +69,12 @@ static const char *dns_seeds[] = {
     "testnet-seed.bitcoin.schildbach.de."
 };
 
+//Bitcoin (Cash) seeds
+//static const char *dns_seeds[] = {
+//    "testnet-seed.bitcoinabc.org.", "testnet-seed-abc.bitcoinforks.org.", "testnet-seed.bitprim.org.",
+//    "testnet-seed.deadalnix.me.", "testnet-seeder.criptolayer.net."
+//};
+
 #else // main net
 
 // blockchain checkpoints - these are also used as starting points for partial chain downloads, so they need to be at
@@ -104,6 +110,11 @@ static const char *dns_seeds[] = {
     "seed.breadwallet.com.", "seed.bitcoin.sipa.be.", "dnsseed.bluematt.me.", "dnsseed.bitcoin.dashjr.org.",
     "seed.bitcoinstats.com.", "bitseed.xf2.org.", "seed.bitcoin.jonasschnelli.ch."
 };
+
+//static const char *dns_seeds[] = {
+//    "seed.bitcoinabc.org.", "seed-abc.bitcoinforks.org.", "seed.bitprim.org.", "seed.deadalnix.me.",
+//    "seeder.criptolayer.net."
+//};
 
 #endif
 
