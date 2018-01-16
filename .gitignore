@@ -35,4 +35,7 @@
 *.xcworkspace
 *.xcodeproj
 
+# EMACS backup files
+*~
+
 .idea/
