@@ -41,8 +41,8 @@ extern "C" {
 // bitcoin address prefixes
 #define BITCOIN_PUBKEY_ADDRESS      0
 #define BITCOIN_SCRIPT_ADDRESS      5
-#define BITCOIN_PUBKEY_ADDRESS_TEST 111 //0
-#define BITCOIN_SCRIPT_ADDRESS_TEST 196 //5 Explore these additions.  Added by the anonymous Unitwallet team
+#define BITCOIN_PUBKEY_ADDRESS_TEST 111
+#define BITCOIN_SCRIPT_ADDRESS_TEST 196
 
 // bitcoin script opcodes: https://en.bitcoin.it/wiki/Script#Constants
 #define OP_0           0x00
