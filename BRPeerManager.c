@@ -835,11 +835,9 @@ static void _peerConnected(void *info)
         peer_log(peer, "node isn't synced");
         BRPeerDisconnect(peer);
     }
-    //Unitwallet guys just added a ! in front of this and kept rolling.
-    //else if ((peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
-    //  peer_log(peer, "bitcoin (cash) nodes are supported");
+
     else if (!(peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
-        peer_log(peer, "bitcoin core nodes are supported");
+        peer_log(peer, "bitcoin core nodes are not supported");
         BRPeerDisconnect(peer);
     }
     else if (BRPeerVersion(peer) >= 70011 && ! (peer->services & SERVICES_NODE_BLOOM)) {
