@@ -33,7 +33,6 @@
 extern "C" {
 #endif
 
-#define BLOCK_DIFFICULTY_INTERVAL 2016 // number of blocks between difficulty target adjustments
 #define BLOCK_UNKNOWN_HEIGHT      INT32_MAX
 #define BLOCK_MAX_TIME_DRIFT      (2*60*60) // the furthest in the future a block is allowed to be timestamped
 
@@ -83,8 +82,6 @@ int BRMerkleBlockIsValid(const BRMerkleBlock *block, uint32_t currentTime);
 int BRMerkleBlockContainsTxHash(const BRMerkleBlock *block, UInt256 txHash);
 
 // verifies the block difficulty target is correct for the block's position in the chain
-// transitionTime is the timestamp of the block at the previous difficulty transition
-// transitionTime may be 0 if block->height is not a multiple of BLOCK_DIFFICULTY_INTERVAL
 int BRMerkleBlockVerifyDifficulty(const BRMerkleBlock *block, const BRMerkleBlock *previous, uint32_t transitionTime);
 
 // returns a hash value for block suitable for use in a hashtable

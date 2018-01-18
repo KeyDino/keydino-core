@@ -301,15 +301,12 @@ int BRMerkleBlockContainsTxHash(const BRMerkleBlock *block, UInt256 txHash)
 }
 
 // verifies the block difficulty target is correct for the block's position in the chain
-// transitionTime is the timestamp of the block at the previous difficulty transition
-// transitionTime may be 0 if block->height is not a multiple of BLOCK_DIFFICULTY_INTERVAL
 //
 // The difficulty target algorithm works as follows:
-// The target must be the same as in the previous block unless the block's height is a multiple of 2016. Every 2016
-// blocks there is a difficulty transition where a new difficulty is calculated. The new target is the previous target
-// multiplied by the time between the last transition block's timestamp and this one (in seconds), divided by the
-// targeted time between transitions (14*24*60*60 seconds). If the new difficulty is more than 4x or less than 1/4 of
-// the previous difficulty, the change is limited to either 4x or 1/4. There is also a minimum difficulty value
+// Every block there is a difficulty transition where a new difficulty is calculated. The new target is the previous
+// target multiplied by the time between the last transition block's timestamp and this one (in seconds), divided by
+// the targeted time between transitions (14*24*60*60 seconds). If the new difficulty is more than 4x or less than 1/4
+// of the previous difficulty, the change is limited to either 4x or 1/4. There is also a minimum difficulty value
 // intuitively named MAX_PROOF_OF_WORK... since larger values are less difficult.
 int BRMerkleBlockVerifyDifficulty(const BRMerkleBlock *block, const BRMerkleBlock *previous, uint32_t transitionTime)
 {
@@ -319,37 +316,35 @@ int BRMerkleBlockVerifyDifficulty(const BRMerkleBlock *block, const BRMerkleBloc
     assert(previous != NULL);
     
     if (! previous || !UInt256Eq(block->prevBlock, previous->blockHash) || block->height != previous->height + 1) r = 0;
-    if (r && (block->height % BLOCK_DIFFICULTY_INTERVAL) == 0 && transitionTime == 0) r = 0;
     
 #if BITCOIN_TESTNET
     // TODO: implement testnet difficulty rule check
     return r; // don't worry about difficulty on testnet for now
 #endif
     
-    if (r && (block->height % BLOCK_DIFFICULTY_INTERVAL) == 0) {
-        // target is in "compact" format, where the most significant byte is the size of resulting value in bytes, next
-        // bit is the sign, and the remaining 23bits is the value after having been right shifted by (size - 3)*8 bits
-        static const uint32_t maxsize = MAX_PROOF_OF_WORK >> 24, maxtarget = MAX_PROOF_OF_WORK & 0x00ffffff;
-        int timespan = (int)((int64_t)previous->timestamp - (int64_t)transitionTime), size = previous->target >> 24;
-        uint64_t target = previous->target & 0x00ffffff;
+    // target is in "compact" format, where the most significant byte is the size of resulting value in bytes, next
+    // bit is the sign, and the remaining 23bits is the value after having been right shifted by (size - 3)*8 bits
+    static const uint32_t maxsize = MAX_PROOF_OF_WORK >> 24, maxtarget = MAX_PROOF_OF_WORK & 0x00ffffff;
+    int timespan = (int)((int64_t)previous->timestamp - (int64_t)transitionTime), size = previous->target >> 24;
+    uint64_t target = previous->target & 0x00ffffff;
     
-        // limit difficulty transition to -75% or +400%
-        if (timespan < TARGET_TIMESPAN/4) timespan = TARGET_TIMESPAN/4;
-        if (timespan > TARGET_TIMESPAN*4) timespan = TARGET_TIMESPAN*4;
+    // limit difficulty transition to -75% or +400%
+    if (timespan < TARGET_TIMESPAN/4) timespan = TARGET_TIMESPAN/4;
+    if (timespan > TARGET_TIMESPAN*4) timespan = TARGET_TIMESPAN*4;
     
-        // TARGET_TIMESPAN happens to be a multiple of 256, and since timespan is at least TARGET_TIMESPAN/4, we don't
-        // lose precision when target is multiplied by timespan and then divided by TARGET_TIMESPAN/256
-        target *= timespan;
-        target /= TARGET_TIMESPAN >> 8;
-        size--; // decrement size since we only divided by TARGET_TIMESPAN/256
+    // TARGET_TIMESPAN happens to be a multiple of 256, and since timespan is at least TARGET_TIMESPAN/4, we don't
+    // lose precision when target is multiplied by timespan and then divided by TARGET_TIMESPAN/256
+    target *= timespan;
+    target /= TARGET_TIMESPAN >> 8;
+    size--; // decrement size since we only divided by TARGET_TIMESPAN/256
     
-        while (size < 1 || target > 0x007fffff) target >>= 8, size++; // normalize target for "compact" format
+    while (size < 1 || target > 0x007fffff) target >>= 8, size++; // normalize target for "compact" format
     
-        // limit to MAX_PROOF_OF_WORK
-        if (size > maxsize || (size == maxsize && target > maxtarget)) target = maxtarget, size = maxsize;
+    // limit to MAX_PROOF_OF_WORK
+    if (size > maxsize || (size == maxsize && target > maxtarget)) target = maxtarget, size = maxsize;
     
-        if (block->target != ((uint32_t)target | size << 24)) r = 0;
-    }
+    if (block->target != ((uint32_t)target | size << 24)) r = 0;
+    
     else if (r && block->target != previous->target) r = 0;
     
     return r;
