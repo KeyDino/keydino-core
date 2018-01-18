@@ -1192,7 +1192,7 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
 {
     uint32_t transitionTime = 0;
     int r = 1;
-    
+
     // check if we hit a difficulty transition, and find previous transition time
     if ((block->height % BLOCK_DIFFICULTY_INTERVAL) == 0) {
         BRMerkleBlock *b = block;
@@ -1221,7 +1221,8 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
                 BRMerkleBlockFree(b);
             }
         }
-    }
+     }
+    
     //Unitwallet guys don't confirm block difficulty at all by removing the next five lines of code
     // verify block difficulty
     //if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
