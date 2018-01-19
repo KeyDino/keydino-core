@@ -897,3 +897,4 @@ void BRScrypt(void *dk, size_t dkLen, const void *pw, size_t pwLen, const void *
     mem_clean(v, 128*r*n);
     free(v);
 }
+

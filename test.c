@@ -29,6 +29,7 @@
 #include "BRKey.h"
 #include "BRBIP38Key.h"
 #include "BRAddress.h"
+#include "BRBase32.h"
 #include "BRBase58.h"
 #include "BRBIP39Mnemonic.h"
 #include "BRBIP39WordsEn.h"
@@ -51,8 +52,8 @@
 
 #ifdef __ANDROID__
 #include <android/log.h>
-#define fprintf(...) __android_log_print(ANDROID_LOG_ERROR, "bread", _va_rest(__VA_ARGS__, NULL))
-#define printf(...) __android_log_print(ANDROID_LOG_INFO, "bread", __VA_ARGS__)
+#define fprintf(...) __android_log_print(ANDROID_LOG_ERROR, "keydino", _va_rest(__VA_ARGS__, NULL))
+#define printf(...) __android_log_print(ANDROID_LOG_INFO, "keydino", __VA_ARGS__)
 #define _va_first(first, ...) first
 #define _va_rest(first, ...) __VA_ARGS__
 #endif
@@ -203,6 +204,110 @@ int BRSetTests()
     }
 
     if (BRSetCount(s) != 0) r = 0, fprintf(stderr, "***FAILED*** %s: BRSetCount() test 2\n", __func__);
+    
+    return r;
+}
+
+int BRBase32Tests()
+{
+    int r = 1;
+    char *s;
+    
+    s = "#&$@*^(*#!^"; // test bad input
+    
+    uint8_t buf1[BRBase32Decode(NULL, 0, s)];
+    size_t len1 = BRBase32Decode(buf1, sizeof(buf1), s);
+    
+    if (len1 != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 1\n", __func__);
+    
+    uint8_t buf2[BRBase58Decode(NULL, 0, "")];
+    size_t len2 = BRBase58Decode(buf2, sizeof(buf2), "");
+    
+    if (len2 != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 2\n", __func__);
+    
+    s = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+    
+    uint8_t buf3[BRBase32Decode(NULL, 0, s)];
+    size_t len3 = BRBase32Decode(buf3, sizeof(buf3), s);
+    char str3[BRBase32Encode(NULL, 0, buf3, len3)];
+    
+    BRBase58Encode(str3, sizeof(str3), buf3, len3);
+    if (strcmp(str3, s) != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 3\n", __func__);
+    
+    s = "1111111111111111111111111111111111111111111111111111111111111111111";
+    
+    uint8_t buf4[BRBase32Decode(NULL, 0, s)];
+    size_t len4 = BRBase32Decode(buf4, sizeof(buf4), s);
+    char str4[BRBase32Encode(NULL, 0, buf4, len4)];
+    
+    BRBase32Encode(str4, sizeof(str4), buf4, len4);
+    if (strcmp(str4, s) != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 4\n", __func__);
+    
+    s = "111111111111111111111111111111111111111111111111111111111111111111z";
+    
+    uint8_t buf5[BRBase32Decode(NULL, 0, s)];
+    size_t len5 = BRBase32Decode(buf5, sizeof(buf5), s);
+    char str5[BRBase32Encode(NULL, 0, buf5, len5)];
+    
+    BRBase32Encode(str5, sizeof(str5), buf5, len5);
+    if (strcmp(str5, s) != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 5\n", __func__);
+    
+    s = "z";
+    
+    uint8_t buf6[BRBase32Decode(NULL, 0, s)];
+    size_t len6 = BRBase32Decode(buf6, sizeof(buf6), s);
+    char str6[BRBase32Encode(NULL, 0, buf6, len6)];
+    
+    BRBase32Encode(str6, sizeof(str6), buf6, len6);
+    if (strcmp(str6, s) != 0) r = 0, fprintf(stderr, "***FAILED*** %s: Base32Decode() test 6\n", __func__);
+    
+    s = NULL;
+    
+    char s1[BRBase32CheckEncode(NULL, 0, (uint8_t *)s, 0)];
+    size_t l1 = BRBase32CheckEncode(s1, sizeof(s1), (uint8_t *)s, 0);
+    uint8_t b1[BRBase32CheckDecode(NULL, 0, s1)];
+    
+    l1 = BRBase32CheckDecode(b1, sizeof(b1), s1);
+    if (l1 != 0) r = 0, fprintf(stderr, "***FAILED*** %s: BRBase32CheckDecode() test 1\n", __func__);
+    
+    s = "";
+    
+    char s2[BRBase32CheckEncode(NULL, 0, (uint8_t *)s, 0)];
+    size_t l2 = BRBase32CheckEncode(s2, sizeof(s2), (uint8_t *)s, 0);
+    uint8_t b2[BRBase32CheckDecode(NULL, 0, s2)];
+    
+    l2 = BRBase58CheckDecode(b2, sizeof(b2), s2);
+    if (l2 != 0) r = 0, fprintf(stderr, "***FAILED*** %s: BRBase32CheckDecode() test 2\n", __func__);
+    
+    s = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+    
+    char s3[BRBase32CheckEncode(NULL, 0, (uint8_t *)s, 21)];
+    size_t l3 = BRBase32CheckEncode(s3, sizeof(s3), (uint8_t *)s, 21);
+    uint8_t b3[BRBase32CheckDecode(NULL, 0, s3)];
+    
+    l3 = BRBase32CheckDecode(b3, sizeof(b3), s3);
+    if (l3 != 21 || memcmp(s, b3, l3) != 0)
+        r = 0, fprintf(stderr, "***FAILED*** %s: BRBase32CheckDecode() test 3\n", __func__);
+    
+    s = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
+    
+    char s4[BRBase32CheckEncode(NULL, 0, (uint8_t *)s, 21)];
+    size_t l4 = BRBase32CheckEncode(s4, sizeof(s4), (uint8_t *)s, 21);
+    uint8_t b4[BRBase32CheckDecode(NULL, 0, s4)];
+    
+    l4 = BRBase32CheckDecode(b4, sizeof(b4), s4);
+    if (l4 != 21 || memcmp(s, b4, l4) != 0)
+        r = 0, fprintf(stderr, "***FAILED*** %s: BRBase32CheckDecode() test 4\n", __func__);
+    
+    s = "\x05\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF";
+    
+    char s5[BRBase32CheckEncode(NULL, 0, (uint8_t *)s, 21)];
+    size_t l5 = BRBase32CheckEncode(s5, sizeof(s5), (uint8_t *)s, 21);
+    uint8_t b5[BRBase32CheckDecode(NULL, 0, s5)];
+    
+    l5 = BRBase32CheckDecode(b5, sizeof(b5), s5);
+    if (l5 != 21 || memcmp(s, b5, l5) != 0)
+        r = 0, fprintf(stderr, "***FAILED*** %s: BRBase32CheckDecode() test 5\n", __func__);
     
     return r;
 }
@@ -1670,13 +1775,11 @@ static void walletTxDeleted(void *info, UInt256 txHash, int notifyUser, int reco
     printf("tx deleted: %s\n", u256_hex_encode(txHash));
 }
 
-// TODO: test standard free transaction no change
-// TODO: test free transaction who's inputs are too new to hit min free priority
 // TODO: test transaction with change below min allowable output
 // TODO: test gap limit with gaps in address chain less than the limit
 // TODO: test removing a transaction that other transansactions depend on
 // TODO: test tx ordering for multiple tx with same block height
-// TODO: port all applicable tests from bitcoinj and bitcoincore
+// TODO: port all applicable tests from bitcoinj and bitcoincore (explore Bitcoin Unlimited, Bitcoin ABC, etc.)
 
 int BRWalletTests()
 {

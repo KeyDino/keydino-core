@@ -1225,11 +1225,15 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
     
     //Unitwallet guys don't confirm block difficulty at all by removing the next five lines of code
     // verify block difficulty
-    //if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
-    //    peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
-    //             u256_hex_encode(block->blockHash));
-    //    r = 0;
-    //}
+    // verify block difficulty only if after latest checkpoint
+    printf("Test");
+    if (block->height > checkpoint_array[CHECKPOINT_COUNT-1].height) {
+        if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
+            peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
+                 u256_hex_encode(block->blockHash));
+            r = 0;
+        }
+    }
     
     if (r) {
         BRMerkleBlock *checkpoint = BRSetGet(manager->checkpoints, block);

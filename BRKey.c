@@ -25,6 +25,7 @@
 #include "BRKey.h"
 #include "BRAddress.h"
 #include "BRBase58.h"
+#include "BRBase32.h"
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>

@@ -26,6 +26,7 @@
 #include "BRAddress.h"
 #include "BRCrypto.h"
 #include "BRBase58.h"
+#include "BRBase32.h"
 #include "BRInt.h"
 #include <stdlib.h>
 #include <string.h>
