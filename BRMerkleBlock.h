@@ -41,6 +41,8 @@ typedef struct {
     UInt256 blockHash;
     uint32_t version;
     UInt256 prevBlock;
+//  UInt256 prevBlock2;
+//  UInt256 prevBlock3;
     UInt256 merkleRoot;
     uint32_t timestamp; // time interval since unix epoch
     uint32_t target;

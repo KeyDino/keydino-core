@@ -65,15 +65,6 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     { 1203698, "00000000d365179f60f3bfa4ae2beaffc04c920c7472c41e66271ad1c502fd21", 1516073725, 0x1d00ffff }
 };
 
-//Bitcoin (Cash) Testnet latest block
-//{ 1203698, "00000000d365179f60f3bfa4ae2beaffc04c920c7472c41e66271ad1c502fd21", 1516073725, 0x1d00ffff}
-
-//static const char *dns_seeds[] = {
-//    "testnet-seed.breadwallet.com.", "testnet-seed.bitcoin.petertodd.org.", "testnet-seed.bluematt.me.",
-//    "testnet-seed.bitcoin.schildbach.de."
-//};
-
-//Bitcoin (Cash) seeds
 static const char *dns_seeds[] = {
     "testnet-seed.bitcoinabc.org.", "testnet-seed-abc.bitcoinforks.org.", "testnet-seed.bitprim.org.",
     "testnet-seed.deadalnix.me.", "testnet-seeder.criptolayer.net."
@@ -110,14 +101,6 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
     { 463680, "000000000000000000431a2f4619afe62357cd16589b638bb638f2992058d88e", 1493259601, 0x18021b3e },
     { 513111, "000000000000000003a7a4e65f327036c794bd1083577bd7196b3edf9f56aaff", 1516068278, 0x1803d5d9 }
 };
-
-//Bitcoin (Cash) latest block
-//{ 513111, "000000000000000003a7a4e65f327036c794bd1083577bd7196b3edf9f56aaff", 1516068278, 0x1803d5d9 }
-
-//static const char *dns_seeds[] = {
-//    "seed.breadwallet.com.", "seed.bitcoin.sipa.be.", "dnsseed.bluematt.me.", "dnsseed.bitcoin.dashjr.org.",
-//    "seed.bitcoinstats.com.", "bitseed.xf2.org.", "seed.bitcoin.jonasschnelli.ch."
-//};
 
 static const char *dns_seeds[] = {
     "seed.bitcoinabc.org.", "seed-abc.bitcoinforks.org.", "seed.bitprim.org.", "seed.deadalnix.me.",
@@ -734,7 +717,6 @@ static UInt128 *_addressLookup(const char *hostname)
                 addrList[i].u32[3] = ((struct sockaddr_in *)p->ai_addr)->sin_addr.s_addr;
                 i++;
             }
-            //Unitwallet guys have the following three lines commented out
             else if (p->ai_family == AF_INET6) {
                 addrList[i++] = *(UInt128 *)&((struct sockaddr_in6 *)p->ai_addr)->sin6_addr;
             }
@@ -1223,16 +1205,13 @@ static int _BRPeerManagerVerifyBlock(BRPeerManager *manager, BRMerkleBlock *bloc
         }
      }
     
-    //Unitwallet guys don't confirm block difficulty at all by removing the next five lines of code
-    // verify block difficulty
-    // verify block difficulty only if after latest checkpoint
-    printf("Test");
+    // verify block difficulty only if after latest checkpoint.  Need to modify BRMerkleBlock and BRMerkleBlockVerifyDifficulty for this.
     if (block->height > checkpoint_array[CHECKPOINT_COUNT-1].height) {
-        if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
-            peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
-                 u256_hex_encode(block->blockHash));
-            r = 0;
-        }
+        //if (r && ! BRMerkleBlockVerifyDifficulty(block, prev, transitionTime)) {
+        //    peer_log(peer, "relayed block with invalid difficulty target %x, blockHash: %s", block->target,
+        //         u256_hex_encode(block->blockHash));
+        //    r = 0;
+        //}
     }
     
     if (r) {
