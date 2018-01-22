@@ -146,6 +146,7 @@ size_t BRBase32CheckDecode(uint8_t *data, size_t dataLen, const char *str)
     
     if (len >= 4) {
         len -= 4;
+        //PolyMod(<#char *str#>, <#size_t strLen#>, <#const uint8_t *data#>, <#size_t dataLen#>)
         BRSHA256_2(md, buf, len);
         if (memcmp(&buf[len], md, sizeof(uint32_t)) != 0) len = 0; // verify checksum
         if (data && len <= dataLen) memcpy(data, buf, len);
@@ -156,25 +157,3 @@ size_t BRBase32CheckDecode(uint8_t *data, size_t dataLen, const char *str)
     if (buf != _buf) free(buf);
     return (! data || len <= dataLen) ? len : 0;
 }
-
-//Shelved, CashAddr implemented later
-/*
-uint64_t PolyMod(char *str, size_t strLen, const uint8_t *data, size_t dataLen)
-{
-    
-    uint64_t c = 1;
-
-    for (uint8_t d : v) {
-        uint8_t c0 = c >> 35;
-        c = ((c & 0x07ffffffff) << 5) ^ d;
-        
-        if (c0 & 0x01) c ^= 0x98f2bc8e61;
-        if (c0 & 0x02) c ^= 0x79b76d99e2;
-        if (c0 & 0x04) c ^= 0xf33e5fb3c4;
-        if (c0 & 0x08) c ^= 0xae2eabe2a8;
-        if (c0 & 0x10) c ^= 0x1e4f43e470;
-    }
-
-    return c ^ 1;
-}
-*/

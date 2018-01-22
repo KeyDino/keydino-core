@@ -30,8 +30,6 @@ size_t BRBase32CheckEncode(char *str, size_t strLen, const uint8_t *data, size_t
 // returns the number of bytes written to data, or total dataLen needed if data is NULL
 size_t BRBase32CheckDecode(uint8_t *data, size_t dataLen, const char *str);
     
-// Compute checksum
-//uint64_t PolyMod(void *md32, const void *data, size_t len);
 
 #ifdef __cplusplus
 }

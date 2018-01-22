@@ -89,6 +89,10 @@ void BRPBKDF2(void *dk, size_t dkLen, void (*hash)(void *, const void *, size_t)
 void BRScrypt(void *dk, size_t dkLen, const void *pw, size_t pwLen, const void *salt, size_t saltLen,
               unsigned n, unsigned r, unsigned p);
 
+// Compute checksum
+uint64_t PolyMod(char *str, size_t strLen, const uint8_t *data, size_t dataLen);
+//uint64_t PolyMod(void *md32, const void *data, size_t len);
+    
 // zeros out memory in a way that can't be optimized out by the compiler
 inline static void mem_clean(void *ptr, size_t len)
 {
