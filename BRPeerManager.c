@@ -818,7 +818,7 @@ static void _peerConnected(void *info)
         BRPeerDisconnect(peer);
     }
 
-    else if (!(peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH) {
+    else if (!((peer->services & SERVICES_NODE_BCH) == SERVICES_NODE_BCH)) {
         peer_log(peer, "bitcoin core nodes are not supported");
         BRPeerDisconnect(peer);
     }
