@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+
 #include "BRPeer.h"
 #include "BRMerkleBlock.h"
 #include "BRAddress.h"
@@ -40,7 +41,7 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/time.h>
-#include <netinet/in.h>	
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 #if BITCOIN_TESTNET

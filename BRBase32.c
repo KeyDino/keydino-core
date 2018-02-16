@@ -6,6 +6,7 @@
 //  Copyright © 2018 KeyDino LLC. All rights reserved.
 //
 
+
 #include "BRBase32.h"
 #include "BRCrypto.h"
 #include <inttypes.h>

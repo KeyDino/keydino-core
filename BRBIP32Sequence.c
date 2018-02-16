@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+
 #include "BRBIP32Sequence.h"
 #include "BRCrypto.h"
 #include "BRBase58.h"

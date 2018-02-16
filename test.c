@@ -22,6 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <inttypes.h>
+#include <errno.h>
+#include <time.h>
+#include <unistd.h>
+#include <arpa/inet.h>
 #include "BRCrypto.h"
 #include "BRBloomFilter.h"
 #include "BRMerkleBlock.h"
@@ -39,14 +47,7 @@
 #include "BRInt.h"
 #include "BRArray.h"
 #include "BRSet.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <inttypes.h>
-#include <errno.h>
-#include <time.h>
-#include <unistd.h>
-#include <arpa/inet.h>
+
 
 #define SKIP_BIP38 1
 
